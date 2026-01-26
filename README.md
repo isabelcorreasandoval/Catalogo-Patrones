@@ -36,8 +36,8 @@ public class Singleton {
 }
 ```
 
-```Python
-
+Python
+```
 class Singleton:
     _instance = None
     def __new__(cls):
