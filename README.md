@@ -124,7 +124,7 @@ noticia.enviar()
 * Categoría: Comportamiento
 * Define una suscripción automática para que múltiples objetos reaccionen al instante cuando un componente central cambia su estado.
 * **Estructura UML:**
-```
+```mermaid
   classDiagram
     class Sujeto {
         -observadores: List
