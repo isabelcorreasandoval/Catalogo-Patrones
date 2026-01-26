@@ -87,6 +87,39 @@ class CreadorConcreto extends Creador {
 }
  ```
 
+Python
+ ```
+from abc import ABC, abstractmethod
+
+# Interfaz del Producto
+class Notificacion(ABC):
+    @abstractmethod
+    def enviar(self):
+        pass
+
+# Producto Concreto
+class EmailNotificacion(Notificacion):
+    def enviar(self):
+        print("Enviando notificación por Email...")
+
+# Creador (Factory)
+class FabricaNotificaciones(ABC):
+    @abstractmethod
+    def crear_notificacion(self) -> Notificacion:
+        pass
+
+# Creador Concreto
+class FabricaEmail(FabricaNotificaciones):
+    def crear_notificacion(self) -> Notificacion:
+        return EmailNotificacion()
+
+# Uso
+fabrica = FabricaEmail()
+noticia = fabrica.crear_notificacion()
+noticia.enviar()
+
+ ```
+
 
     
 
