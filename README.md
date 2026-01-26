@@ -174,7 +174,7 @@ class Sujeto:
 
 ---
 
-## 1. Adapter
+## 4. Adapter
 * Categoría: Estructural
 * Propósito: Funciona como un puente entre dos interfaces incompatibles, permitiendo que clases que normalmente no podrían trabajar juntas lo hagan mediante un objeto "traductor".
 * **Estructura UML:**
@@ -238,6 +238,82 @@ dispositivo = AdaptadorSD(TarjetaMicroSD())
 dispositivo.leer_datos()
 
 ```
+
+---
+
+## 5. Strategy
+* Categoría: Comportamiento
+* Propósito: Define una familia de algoritmos y los encapsula en clases separadas, permitiendo que el algoritmo que usa un objeto pueda cambiar en tiempo de ejecución según la necesidad.
+**Estructura UML:**
+``` mermaid
+classDiagram
+    class Contexto {
+        -estrategia: Estrategia
+        +setEstrategia(e)
+        +ejecutar()
+    }
+    class Estrategia {
+        <<interface>>
+        +algoritmo()
+    }
+    class EstrategiaConcretaA {
+        +algoritmo()
+    }
+    class EstrategiaConcretaB {
+        +algoritmo()
+    }
+    Contexto o-- Estrategia
+    Estrategia <|-- EstrategiaConcretaA
+    Estrategia <|-- EstrategiaConcretaB
+```
+
+Java 
+```
+// Interfaz de la estrategia
+interface EstrategiaPago { void pagar(int monto); }
+
+// Estrategias concretas
+class PagoTarjeta implements EstrategiaPago {
+    public void pagar(int m) { System.out.println("Pagando " + m + " con Tarjeta"); }
+}
+
+class PagoPaypal implements EstrategiaPago {
+    public void pagar(int m) { System.out.println("Pagando " + m + " con PayPal"); }
+}
+
+// Clase que usa la estrategia
+class Carrito {
+    private EstrategiaPago metodo;
+    public void setMetodo(EstrategiaPago e) { this.metodo = e; }
+    public void procesar(int m) { metodo.pagar(m); }
+}
+
+```
+
+Python 
+```
+class PagoTarjeta:
+    def pagar(self, monto):
+        print(f"Pagando {monto} con Tarjeta")
+
+class PagoPaypal:
+    def pagar(self, monto):
+        print(f"Pagando {monto} con PayPal")
+
+class Carrito:
+    def __init__(self, estrategia):
+        self.estrategia = estrategia
+
+    def procesar(self, monto):
+        self.estrategia.pagar(monto)
+
+# Uso: c = Carrito(PagoTarjeta()); c.procesar(100)
+
+```
+
+---
+
+
 
 
 
