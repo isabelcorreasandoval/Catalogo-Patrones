@@ -51,8 +51,8 @@ class Singleton:
 ---
 
 **## 2. Factory Method**
-*Categoría: Creacional
-*Propósito: Define una interfaz para crear objetos en una superclase, pero permite que las subclases alteren el tipo de objetos que se crearán según la necesidad.
+* Categoría: Creacional
+* Propósito: Define una interfaz para crear objetos en una superclase, pero permite que las subclases alteren el tipo de objetos que se crearán según la necesidad.
 * **Estructura UML:**
 ```mermaid
 classDiagram
