@@ -50,7 +50,7 @@ class Singleton:
 
 ---
 
-**## 2. Factory Method**
+## 2. Factory Method
 * Categoría: Creacional
 * Propósito: Define una interfaz para crear objetos en una superclase, pero permite que las subclases alteren el tipo de objetos que se crearán según la necesidad.
 * **Estructura UML:**
@@ -119,6 +119,60 @@ noticia = fabrica.crear_notificacion()
 noticia.enviar()
 
  ```
+
+**## 3. Observer**
+* Categoría: Comportamiento
+* Define una suscripción automática para que múltiples objetos reaccionen al instante cuando un componente central cambia su estado.
+* **Estructura UML:**
+```
+  classDiagram
+    class Sujeto {
+        -observadores: List
+        +suscribir(o)
+        +notificar()
+    }
+    class Observador {
+        <<interface>>
+        +actualizar()
+    }
+    Sujeto --> Observador
+ ```
+
+Java 
+
+ ```
+import java.util.*;
+
+interface Observador { void actualizar(String m); }
+
+class Sujeto {
+    private List<Observador> lista = new ArrayList<>();
+    public void suscribir(Observador o) { lista.add(o); }
+    public void notificar(String msg) { lista.forEach(o -> o.actualizar(msg)); }
+}
+
+ ```
+
+Python
+
+ ```
+
+class Sujeto:
+    def __init__(self):
+        self._observadores = []
+
+    def suscribir(self, obj):
+        self._observadores.append(obj)
+
+    def notificar(self, mensaje):
+        for o in self._observadores:
+            o.actualizar(mensaje)
+
+ ```
+
+
+
+
 
 
     
