@@ -313,6 +313,72 @@ class Carrito:
 
 ---
 
+## 6. Proxy
+* Categoría: Estructural
+* Propósito: Proporciona un sustituto o intermediario para otro objeto con el fin de controlar el acceso a él, permitiendo añadir lógica adicional como seguridad o carga perezosa.
+**Estructura UML:**
+``` mermaid
+classDiagram
+    class Sujeto {
+        <<interface>>
+        +peticion()
+    }
+    class SujetoReal {
+        +peticion()
+    }
+    class Proxy {
+        -sujetoReal: SujetoReal
+        +peticion()
+    }
+    Sujeto <|-- SujetoReal
+    Sujeto <|-- Proxy
+    Proxy --> SujetoReal
+```
+
+Java
+```
+interface Internet { void conectar(String url); }
+
+class InternetReal implements Internet {
+    public void conectar(String url) { System.out.println("Conectando a: " + url); }
+}
+
+class ProxyInternet implements Internet {
+    private InternetReal internet = new InternetReal();
+    private static List<String> bloqueados = Arrays.asList("sitio-prohibido.com");
+
+    public void conectar(String url) {
+        if(bloqueados.contains(url)) System.out.println("Acceso Denegado");
+        else internet.conectar(url);
+    }
+}
+
+```
+
+Python
+```
+class InternetReal:
+    def conectar(self, url):
+        print(f"Conectando a: {url}")
+
+class ProxyInternet:
+    def __init__(self):
+        self.internet_real = InternetReal()
+        self.bloqueados = ["sitio-prohibido.com"]
+
+    def conectar(self, url):
+        if url in self.bloqueados:
+            print("Acceso Denegado por el Proxy")
+        else:
+            self.internet_real.conectar(url)
+
+# Uso
+red = ProxyInternet()
+red.conectar("google.com")
+
+```
+
+
 
 
 
