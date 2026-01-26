@@ -174,7 +174,7 @@ class Sujeto:
 
 ---
 
-**## 4.Adapter** 
+## 1. Adapter
 * Categoría: Estructural
 * Propósito: Funciona como un puente entre dos interfaces incompatibles, permitiendo que clases que normalmente no podrían trabajar juntas lo hagan mediante un objeto "traductor".
 * **Estructura UML:**
