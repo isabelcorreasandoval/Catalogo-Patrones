@@ -44,7 +44,55 @@ class Singleton:
         if cls._instance is None:
             cls._instance = super(Singleton, cls).__new__(cls)
         return cls._instance
-```
+
+
+
+---
+
+**## 2. Factory Method**
+*Categoría: Creacional
+*Propósito: Define una interfaz para crear objetos en una superclase, pero permite que las subclases alteren el tipo de objetos que se crearán según la necesidad.
+* **Estructura UML:**
+```mermaid
+classDiagram
+    class Creador {
+        +metodoFabrica() Producto
+    }
+    class CreadorConcreto {
+        +metodoFabrica() Producto
+    }
+    class Producto {
+        <<interface>>
+        +operacion()
+    }
+    Creador <|-- CreadorConcreto
+    Producto <.. CreadorConcreto
+ ```
+
+Java
+ ```
+interface Producto { void operacion(); }
+
+class ProductoConcreto implements Producto {
+    public void operacion() { System.out.println("Lógica de producto en Java"); }
+}
+
+abstract class Creador {
+    public abstract Producto fabricar();
+}
+
+class CreadorConcreto extends Creador {
+    public Producto fabricar() { return new ProductoConcreto(); }
+}
+ ```
+
+
+    
+
+
+
+
+
 
 
   
