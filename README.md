@@ -120,9 +120,11 @@ noticia.enviar()
 
  ```
 
-**## 3. Observer**
+---
+
+## 3. Observer
 * Categoría: Comportamiento
-* Define una suscripción automática para que múltiples objetos reaccionen al instante cuando un componente central cambia su estado.
+* Propósito: Define una suscripción automática para que múltiples objetos reaccionen al instante cuando un componente central cambia su estado.
 * **Estructura UML:**
 ```mermaid
   classDiagram
@@ -169,6 +171,79 @@ class Sujeto:
             o.actualizar(mensaje)
 
  ```
+
+---
+
+**## 4. Adapter.**
+* Categoría: Estructural
+* Propósito: Funciona como un puente entre dos interfaces incompatibles, permitiendo que clases que normalmente no podrían trabajar juntas lo hagan mediante un objeto "traductor".
+**Estructura UML:**
+ ```mermaid
+classDiagram
+    class Target {
+        <<interface>>
+        +request()
+    }
+    class Adapter {
+        -adaptee: Adaptee
+        +request()
+    }
+    class Adaptee {
+        +specificRequest()
+    }
+    Target <|-- Adapter
+    Adapter --> Adaptee
+```
+
+Java 
+```
+
+// Interfaz que espera el cliente
+interface ConectorSD { void leerDatos(); }
+
+// Clase antigua o incompatible
+class TarjetaMicroSD {
+    public void lecturaRapida() { 
+        System.out.println("Leyendo datos desde MicroSD..."); 
+    }
+}
+
+// El Adaptador
+class AdaptadorSD implements ConectorSD {
+    private TarjetaMicroSD microSD = new TarjetaMicroSD();
+    
+    public void leerDatos() {
+        microSD.lecturaRapida();
+    }
+}
+
+```
+
+Python
+```
+class TarjetaMicroSD:
+    def lectura_rapida(self):
+        print("Leyendo datos desde MicroSD...")
+
+class AdaptadorSD:
+    def __init__(self, microsd):
+        self.microsd = microsd
+
+    def leer_datos(self):
+        # Traduce la petición al método que la clase entiende
+        self.microsd.lectura_rapida()
+
+# Uso
+dispositivo = AdaptadorSD(TarjetaMicroSD())
+dispositivo.leer_datos()
+
+```
+
+
+
+   
+
+
 
 
 
