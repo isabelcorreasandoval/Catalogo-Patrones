@@ -620,12 +620,97 @@ class Decorator(Component):
         self._component.execute()
 ```
 
+## 12 Command
+*Categoría: Comportamiento
+* Propósito: Transforma una solicitud en un objeto independiente que contiene toda la información sobre la misma.
+* **Estructura UML:**
+```mermaid
+classDiagram
+    class Command {
+        <<interface>>
+        +execute()
+    }
+    class ConcreteCommand {
+        -receiver: Receiver
+        +execute()
+    }
+    class Invoker {
+        -command: Command
+        +setCommand()
+    }
+    Command <|-- ConcreteCommand
+    Invoker --> Command
+
+```
+
+java
+```
+
+interface Command { void execute(); }
+class SimpleCommand implements Command {
+    public void execute() { System.out.println("Comando ejecutado"); }
+}
+
+```
+
+python
+```
+class Command:
+    def execute(self): pass
+
+class SimpleCommand(Command):
+    def execute(self):
+        print("Comando ejecutado")
+
+```
 
 
 
+## 13 State
+*Categoría: Comportamiento
+* Propósito: Permite que un objeto altere su comportamiento cuando su estado interno cambia.
+* **Estructura UML:**
+```mermaid
+classDiagram
+    class Context {
+        -state: State
+        +request()
+    }
+    class State {
+        <<interface>>
+        +handle()
+    }
+    class ConcreteState {
+        +handle()
+    }
+    Context o-- State
+    State <|-- ConcreteState
+
+```
+
+java
+```
+interface State { void handle(Context ctx); }
+class Context {
+    private State state;
+    public void setState(State s) { this.state = s; }
+    public void request() { state.handle(this); }
+}
+```
+
+python
+```
+class State:
+    def handle(self, context): pass
+
+class Context:
+    def __init__(self, state):
+        self._state = state
+    def request(self):
+        self._state.handle(self)
 
 
-
+```
     
 
 
