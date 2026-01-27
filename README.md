@@ -1067,6 +1067,301 @@ basico.manejar(20)
 
 ```
 
+---
+
+## 18. Interpreter
+
+* **Categoría:** Comportamiento
+* **Propósito:** Define una representación de la gramática de un lenguaje junto con un intérprete para procesar expresiones.
+
+**Estructura UML:**
+
+```mermaid
+classDiagram
+    class AbstractExpression {
+        <<interface>>
+        +interpret(Context context)
+    }
+    class TerminalExpression {
+        +interpret(Context context)
+    }
+    class NonTerminalExpression {
+        -AbstractExpression child
+        +interpret(Context context)
+    }
+    AbstractExpression <|-- TerminalExpression
+    AbstractExpression <|-- NonTerminalExpression
+
+```
+
+**Java**
+
+```java
+interface Expression {
+    int interpret();
+}
+
+class Number implements Expression {
+    private int number;
+    public Number(int number) { this.number = number; }
+    public int interpret() { return number; }
+}
+
+```
+
+**Python**
+
+```python
+class Expression:
+    def interpret(self):
+        pass
+
+class Number(Expression):
+    def __init__(self, value):
+        self.value = value
+    def interpret(self):
+        return self.value
+
+```
+
+---
+
+## 19. Iterator
+
+* **Categoría:** Comportamiento
+* **Propósito:** Permite recorrer elementos de una colección sin exponer su estructura interna.
+
+**Estructura UML:**
+
+```mermaid
+classDiagram
+    class Iterable {
+        <<interface>>
+        +createIterator() Iterator
+    }
+    class Iterator {
+        <<interface>>
+        +hasNext() boolean
+        +next() Object
+    }
+    Iterable <|.. ConcreteCollection
+    Iterator <|.. ConcreteIterator
+    ConcreteCollection ..> ConcreteIterator
+
+```
+
+**Java**
+
+```java
+import java.util.Iterator;
+
+class NameRepository implements Iterable<String> {
+    public String names[] = {"Juan", "Ana", "Luis"};
+    public Iterator<String> iterator() {
+        return new Iterator<String>() {
+            int i = 0;
+            public boolean hasNext() { return i < names.length; }
+            public String next() { return names[i++]; }
+        };
+    }
+}
+
+```
+
+**Python**
+
+```python
+class MyCollection:
+    def __init__(self, items):
+        self.items = items
+    def __iter__(self):
+        return iter(self.items)
+
+```
+
+---
+
+## 20. Mediator
+
+* **Categoría:** Comportamiento
+* **Propósito:** Centraliza la comunicación compleja entre objetos para evitar dependencias directas.
+
+**Estructura UML:**
+
+```mermaid
+classDiagram
+    class Mediator {
+        <<interface>>
+        +notify(sender, event)
+    }
+    class ConcreteMediator {
+        -ComponentA ca
+        -ComponentB cb
+        +notify(sender, event)
+    }
+    Mediator <|.. ConcreteMediator
+
+```
+
+**Java**
+
+```java
+class Mediator {
+    public void notify(String event) {
+        System.out.println("Reaccionando a: " + event);
+    }
+}
+
+```
+
+**Python**
+
+```python
+class Mediator:
+    def notify(self, sender, event):
+        print(f"Mediador recibe {event} de {sender}")
+
+```
+
+---
+
+## 21. Memento
+
+* **Categoría:** Comportamiento
+* **Propósito:** Permite capturar y restaurar el estado previo de un objeto.
+
+**Estructura UML:**
+
+```mermaid
+classDiagram
+    class Originator {
+        -state: String
+        +save() Memento
+        +restore(m: Memento)
+    }
+    class Memento {
+        -state: String
+        +getState() String
+    }
+    Originator ..> Memento
+
+```
+
+**Java**
+
+```java
+class Memento {
+    private final String state;
+    public Memento(String state) { this.state = state; }
+    public String getState() { return state; }
+}
+
+```
+
+**Python**
+
+```python
+class Memento:
+    def __init__(self, state):
+        self._state = state
+    def get_state(self):
+        return self._state
+
+```
+
+---
+
+## 22. Template Method
+
+* **Categoría:** Comportamiento
+* **Propósito:** Define el esqueleto de un algoritmo, delegando pasos específicos a las subclases.
+
+**Estructura UML:**
+
+```mermaid
+classDiagram
+    class AbstractClass {
+        +templateMethod()
+        #step1()*
+        #step2()*
+    }
+    AbstractClass <|-- ConcreteClass
+
+```
+
+**Java**
+
+```java
+abstract class Game {
+    abstract void start();
+    abstract void end();
+    public final void play() {
+        start();
+        end();
+    }
+}
+
+```
+
+**Python**
+
+```python
+class AbstractClass:
+    def template_method(self):
+        self.step_one()
+        self.step_two()
+    def step_one(self): raise NotImplementedError()
+    def step_two(self): print("Paso común")
+
+```
+
+---
+
+## 23. Visitor
+
+* **Categoría:** Comportamiento
+* **Propósito:** Agrega nuevas operaciones a una estructura de objetos sin modificarlos.
+
+**Estructura UML:**
+
+```mermaid
+classDiagram
+    class Visitor {
+        <<interface>>
+        +visit(ElementA)
+    }
+    class Element {
+        <<interface>>
+        +accept(Visitor v)
+    }
+    Visitor <|.. ConcreteVisitor
+    Element <|.. ElementA
+
+```
+
+**Java**
+
+```java
+interface Visitor { void visit(ElementA el); }
+interface Element { void accept(Visitor v); }
+class ElementA implements Element {
+    public void accept(Visitor v) { v.visit(this); }
+}
+
+```
+
+**Python**
+
+```python
+class Visitor:
+    def visit_element_a(self, el): print("Visitando A")
+
+class ElementA:
+    def accept(self, visitor): visitor.visit_element_a(self)
+
+```
+
+
 
 
 
