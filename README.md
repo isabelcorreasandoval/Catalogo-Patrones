@@ -540,7 +540,85 @@ class PizzaBuilder:
         return Pizza(self.masa)
 ```
 
+## 10 Composite
+*Categoría: Estructural
+* Propósito: Permite componer objetos en estructuras de árbol para representar jerarquías de parte-todo.
+* **Estructura UML:**
+```mermaid
+classDiagram
+    class Component {
+        <<interface>>
+        +execute()
+    }
+    class Leaf {
+        +execute()
+    }
+    class Composite {
+        -children: List~Component~
+        +add(Component)
+        +execute()
+    }
+    Component <|-- Leaf
+    Component <|-- Composite
+    Composite o-- Component
+```
 
+java
+```
+interface Component { void execute(); }
+class Composite implements Component {
+    private List<Component> children = new ArrayList<>();
+    public void execute() { children.forEach(Component::execute); }
+}
+```
+python
+```
+class Component:
+    def execute(self): pass
+
+class Composite(Component):
+    def __init__(self):
+        self.children = []
+    def execute(self):
+        for child in self.children: child.execute()
+
+```
+
+
+## 11 Decorator
+*Categoría: Estructural
+* Propósito: Permite añadir funcionalidades a objetos dinámicamente envolviéndolos en objetos decoradores.
+* **Estructura UML:**
+```mermaid
+classDiagram
+    class Component {
+        <<interface>>
+        +execute()
+    }
+    class Decorator {
+        -wrappee: Component
+        +execute()
+    }
+    Component <|-- Decorator
+    Decorator o-- Component
+```
+
+java
+```
+class Decorator implements Component {
+    protected Component component;
+    public Decorator(Component c) { this.component = c; }
+    public void execute() { component.execute(); }
+}
+```
+python
+```
+class Decorator(Component):
+    def __init__(self, component):
+        self._component = component
+    def execute(self):
+        self._component.execute()
+```
 
 
 
