@@ -495,6 +495,52 @@ class Rectangulo(Prototipo):
 r1 = Rectangulo(10, 20)
 r2 = r1.clonar()
 # r2 es un objeto nuevo con los mismos valores
+```
+
+## 9 Builder
+*Categoría: Creacional
+* Propósito: Permite construir objetos complejos paso a paso, permitiendo crear diferentes representaciones usando el mismo código.
+* **Estructura UML:**
+
+```mermaid
+classDiagram
+    class Director {
+        -builder: Builder
+        +construct()
+    }
+    class Builder {
+        <<interface>>
+        +buildPart()
+    }
+    class ConcreteBuilder {
+        +buildPart()
+        +getResult()
+    }
+    Director --> Builder
+    Builder <|-- ConcreteBuilder
+```
+
+java
+```
+class PizzaBuilder {
+    private String masa;
+    public PizzaBuilder setMasa(String m) { this.masa = m; return this; }
+    public Pizza build() { return new Pizza(masa); }
+}
+```
+python
+```
+class PizzaBuilder:
+    def __init__(self):
+        self.masa = None
+    def set_masa(self, masa):
+        self.masa = masa
+        return self
+    def build(self):
+        return Pizza(self.masa)
+```
+
+
 
 
 
