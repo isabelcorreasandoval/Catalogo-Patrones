@@ -808,6 +808,264 @@ control.boton_power()
 
 ```
 
+## 15 Facade
+*Categoría: Estructural
+* Propósito: Proporciona una interfaz unificada y simplificada a un conjunto de interfaces en un subsistema, ocultando la complejidad a los clientes.
+* **Estructura UML:**
+```mermaid
+classDiagram
+    class Fachada {
+        -sistemaA: SubsistemaA
+        -sistemaB: SubsistemaB
+        +operacionSimple()
+    }
+    class SubsistemaA {
+        +operacionA()
+    }
+    class SubsistemaB {
+        +operacionB()
+    }
+    Fachada --> SubsistemaA
+    Fachada --> SubsistemaB
+
+
+```
+
+java
+```
+// Subsistemas complejos
+class Luces {
+    void on() { System.out.println("Luces ON"); }
+}
+class Audio {
+    void on() { System.out.println("Audio ON"); }
+}
+class Proyector {
+    void on() { System.out.println("Proyector ON"); }
+}
+
+// Fachada
+class CineEnCasa {
+    private Luces luces = new Luces();
+    private Audio audio = new Audio();
+    private Proyector proyector = new Proyector();
+
+    public void verPelicula() {
+        System.out.println("Preparando cine...");
+        luces.on();
+        audio.on();
+        proyector.on();
+    }
+}
+
+```
+
+python
+```
+# Subsistemas
+class Luces:
+    def encender(self):
+        print("Luces ON")
+
+class Audio:
+    def encender(self):
+        print("Audio ON")
+
+# Fachada
+class CineEnCasa:
+    def __init__(self):
+        self.luces = Luces()
+        self.audio = Audio()
+
+    def ver_pelicula(self):
+        print("Preparando modo cine...")
+        self.luces.encender()
+        self.audio.encender()
+
+# Uso
+cine = CineEnCasa()
+cine.ver_pelicula()
+
+
+```
+## 16 Flyweight
+*Categoría: Estructural
+* Propósito: Permite mantener una gran cantidad de objetos soportando el uso compartido eficiente de datos comunes (estado intrínseco) para reducir el consumo de memoria RAM.
+* **Estructura UML:**
+```mermaid
+classDiagram
+    class FlyweightFactory {
+        -cache: Map
+        +getFlyweight(key)
+    }
+    class Flyweight {
+        -estadoIntrinseco
+        +operacion(estadoExtrinseco)
+    }
+    FlyweightFactory o-- Flyweight
+
+
+```
+
+java
+```
+import java.util.HashMap;
+import java.util.Map;
+
+// Flyweight (Datos compartidos)
+class TipoArbol {
+    private String nombre; // Intrinseco
+    private String color;  // Intrinseco
+
+    public TipoArbol(String n, String c) {
+        this.nombre = n;
+        this.color = c;
+    }
+
+    public void dibujar(int x, int y) { // (x,y) es extrínseco
+        System.out.println("Arbol " + nombre + " en " + x + "," + y);
+    }
+}
+
+// Factory
+class FabricaArboles {
+    private static Map<String, TipoArbol> tipos = new HashMap<>();
+
+    public static TipoArbol getTipo(String nombre) {
+        if (!tipos.containsKey(nombre)) {
+            tipos.put(nombre, new TipoArbol(nombre, "Verde"));
+            System.out.println("Creando nuevo tipo: " + nombre);
+        }
+        return tipos.get(nombre);
+    }
+}
+
+```
+
+python
+```
+# Flyweight
+class TipoArbol:
+    def __init__(self, nombre):
+        self.nombre = nombre  # Estado compartido
+
+    def dibujar(self, x, y):
+        print(f"Dibujando {self.nombre} en ({x}, {y})")
+
+# Factory
+class FabricaArboles:
+    _tipos = {}
+
+    @staticmethod
+    def get_tipo(nombre):
+        if nombre not in FabricaArboles._tipos:
+            FabricaArboles._tipos[nombre] = TipoArbol(nombre)
+            print(f"-> Creando tipo: {nombre}")
+        return FabricaArboles._tipos[nombre]
+
+# Uso
+t1 = FabricaArboles.get_tipo("Pino")
+t1.dibujar(10, 20)
+t2 = FabricaArboles.get_tipo("Pino")  # Reusa el objeto existente
+t2.dibujar(50, 60)
+
+
+```
+## 17 Chain of Responsibility
+*Categoría: Comportamiento
+* Propósito: Pasa una solicitud a lo largo de una cadena de manejadores. Cada manejador decide si procesa la solicitud o la pasa al siguiente manejador de la cadena.
+* **Estructura UML:**
+```mermaid
+classDiagram
+    class Manejador {
+        -siguiente: Manejador
+        +setSiguiente(m)
+        +manejarPedido(p)
+    }
+    class SoporteBasico {
+        +manejarPedido(p)
+    }
+    class SoporteTecnico {
+        +manejarPedido(p)
+    }
+    Manejador <|-- SoporteBasico
+    Manejador <|-- SoporteTecnico
+    Manejador o-- Manejador
+
+
+```
+
+java
+```
+abstract class Manejador {
+    protected Manejador siguiente;
+
+    public void setSiguiente(Manejador m) {
+        this.siguiente = m;
+    }
+
+    public abstract void manejar(String problema);
+}
+
+class SoporteBasico extends Manejador {
+    public void manejar(String problema) {
+        if (problema.equals("basico")) {
+            System.out.println("Resuelto por Soporte Básico");
+        } else if (siguiente != null) {
+            siguiente.manejar(problema);
+        }
+    }
+}
+
+class SoporteExperto extends Manejador {
+    public void manejar(String problema) {
+        System.out.println("Resuelto por Soporte Experto: " + problema);
+    }
+}
+
+// Uso:
+// SoporteBasico basico = new SoporteBasico();
+// SoporteExperto experto = new SoporteExperto();
+// basico.setSiguiente(experto);
+// basico.manejar("complejo");
+
+```
+
+python
+```
+class Manejador:
+    def __init__(self):
+        self.siguiente = None
+
+    def set_siguiente(self, manejador):
+        self.siguiente = manejador
+        return manejador
+
+    def manejar(self, nivel):
+        if self.siguiente:
+            self.siguiente.manejar(nivel)
+
+class SoporteBasico(Manejador):
+    def manejar(self, nivel):
+        if nivel < 10:
+            print("Soporte Básico resuelve el problema.")
+        elif self.siguiente:
+            print("Básico no puede, pasando al siguiente...")
+            self.siguiente.manejar(nivel)
+
+class SoporteJefe(Manejador):
+    def manejar(self, nivel):
+        print("El Jefe resuelve el problema.")
+
+# Uso
+basico = SoporteBasico()
+jefe = SoporteJefe()
+
+basico.set_siguiente(jefe)
+basico.manejar(20)
+
+
+```
 
 
 
