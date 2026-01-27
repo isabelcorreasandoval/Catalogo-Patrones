@@ -711,7 +711,102 @@ class Context:
 
 
 ```
-    
+
+## 14 Bridge
+*Categoría: Estructural
+* Propósito:Desacopla una abstracción de su implementación para que ambas puedan variar independientemente (separa la jerarquía lógica de la jerarquía física).
+* **Estructura UML:**
+```mermaid
+classDiagram
+    class Abstraccion {
+        -implementador: Implementador
+        +operacion()
+    }
+    class Implementador {
+        <<interface>>
+        +procesar()
+    }
+    class ImplementadorConcretoA {
+        +procesar()
+    }
+    Abstraccion o-- Implementador
+    Implementador <|-- ImplementadorConcretoA
+
+
+```
+
+java
+```
+// Implementador (Interfaz)
+interface Dispositivo {
+    void encender();
+    void apagar();
+}
+
+// Implementaciones Concretas
+class TV implements Dispositivo {
+    public void encender() { System.out.println("TV encendida"); }
+    public void apagar() { System.out.println("TV apagada"); }
+}
+
+class Radio implements Dispositivo {
+    public void encender() { System.out.println("Radio encendida"); }
+    public void apagar() { System.out.println("Radio apagada"); }
+}
+
+// Abstracción
+abstract class ControlRemoto {
+    protected Dispositivo dispositivo;
+
+    public ControlRemoto(Dispositivo d) {
+        this.dispositivo = d;
+    }
+
+    public abstract void botonPower();
+}
+
+class ControlAvanzado extends ControlRemoto {
+    public ControlAvanzado(Dispositivo d) { super(d); }
+
+    public void botonPower() {
+        System.out.println("Enviando señal remota...");
+        dispositivo.encender();
+    }
+}
+
+```
+
+python
+```
+# Implementador
+class Dispositivo:
+    def encender(self): 
+        pass
+
+class TV(Dispositivo):
+    def encender(self):
+        print("TV encendida")
+
+class Radio(Dispositivo):
+    def encender(self):
+        print("Radio encendida")
+
+# Abstracción
+class ControlRemoto:
+    def __init__(self, dispositivo):
+        self.dispositivo = dispositivo
+
+    def boton_power(self):
+        print("Enviando señal...")
+        self.dispositivo.encender()
+
+# Uso
+tv = TV()
+control = ControlRemoto(tv)
+control.boton_power()
+
+
+```
 
 
 
