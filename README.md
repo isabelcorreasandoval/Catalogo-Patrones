@@ -424,6 +424,78 @@ class WinFactory(AbstractFactory):
 
 ```
 
+## 8. Prototype
+**Categoría:** Creacional
+
+**Propósito:** Permite copiar objetos existentes sin que el código dependa de sus clases, delegando el proceso de clonación al propio objeto que se está clonando.
+
+### Estructura UML (Mermaid)
+```mermaid
+classDiagram
+    class Prototipo {
+        <<interface>>
+        +clonar() Prototipo
+    }
+    class PrototipoConcreto {
+        -campo
+        +PrototipoConcreto(prototipo)
+        +clonar() Prototipo
+    }
+    Prototipo <|-- PrototipoConcreto
+
+```
+java
+```
+// Interfaz
+interface Prototipo extends Cloneable {
+    Prototipo clonar();
+}
+
+// Clase Concreta
+class Rectangulo implements Prototipo {
+    private int ancho;
+    private int alto;
+
+    public Rectangulo(int w, int h) {
+        this.ancho = w;
+        this.alto = h;
+    }
+
+    // Lógica de clonación
+    public Prototipo clonar() {
+        return new Rectangulo(this.ancho, this.alto);
+    }
+
+    public String toString() {
+        return "Rectangulo " + ancho + "x" + alto;
+    }
+}
+
+// Uso
+// Rectangulo r1 = new Rectangulo(10, 20);
+// Rectangulo r2 = (Rectangulo) r1.clonar();
+```
+python
+```
+import copy
+
+class Prototipo:
+    def clonar(self):
+        return copy.deepcopy(self)
+
+class Rectangulo(Prototipo):
+    def __init__(self, ancho, alto):
+        self.ancho = ancho
+        self.alto = alto
+
+    def __str__(self):
+        return f"Rectangulo {self.ancho}x{self.alto}"
+
+# Uso
+r1 = Rectangulo(10, 20)
+r2 = r1.clonar()
+# r2 es un objeto nuevo con los mismos valores
+
 
 
 
