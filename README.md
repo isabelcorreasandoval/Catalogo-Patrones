@@ -378,13 +378,51 @@ red.conectar("google.com")
 
 ```
 
+## 7. Abstract Method
+*Categoría: Creacional
+* Propósito: Proporciona una interfaz para crear familias de objetos relacionados sin especificar sus clases concretas.
+* **Estructura UML:**
+``` mermaid
 
+classDiagram
+    class AbstractFactory {
+        <<interface>>
+        +createProductA()
+        +createProductB()
+    }
+    class ConcreteFactory1 {
+        +createProductA()
+        +createProductB()
+    }
+    AbstractFactory <|-- ConcreteFactory1
 
+```
 
+Java
+```
+interface AbstractFactory {
+    Button createButton();
+}
+class WinFactory implements AbstractFactory {
+    public Button createButton() { return new WinButton(); }
+}
 
+```
 
-   
+Python
+```
+from abc import ABC, abstractmethod
 
+class AbstractFactory(ABC):
+    @abstractmethod
+    def create_button(self):
+        pass
+
+class WinFactory(AbstractFactory):
+    def create_button(self):
+        return WinButton()
+
+```
 
 
 
