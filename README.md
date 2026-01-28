@@ -6,6 +6,38 @@
 * Valeria Rosales Arévalo
 * Jorge Arauz Estrada
 
+## Índice de Patrones
+
+### Creacionales
+1. [Singleton](#1-singleton)
+2. [Factory Method](#2-factory-method)
+7. [Abstract Method](#7-abstract-method)
+8. [Prototype](#8-prototype)
+9. [Builder](#9-builder)
+
+### Estructurales
+4. [Adapter](#4-adapter)
+6. [Proxy](#6-proxy)
+10. [Composite](#10-composite)
+11. [Decorator](#11-decorator)
+14. [Bridge](#14-bridge)
+15. [Facade](#15-facade)
+16. [Flyweight](#16-flyweight)
+
+### Comportamiento
+3. [Observer](#3-observer)
+5. [Strategy](#5-strategy)
+12. [Command](#12-command)
+13. [State](#13-state)
+17. [Chain of Responsibility](#17-chain-of-responsibility)
+18. [Interpreter](#18-interpreter)
+19. [Iterator](#19-iterator)
+20. [Mediator](#20-mediator)
+21. [Memento](#21-memento)
+22. [Template Method](#22-template-method)
+23. [Visitor](#23-visitor)
+
+
 ---
 
 ## 1. Singleton
