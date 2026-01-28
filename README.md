@@ -6,6 +6,37 @@
 * Valeria Rosales Arévalo
 * Jorge Arauz Estrada
 
+## Índice de Patrones
+
+### Creacionales
+* [Singleton](#singleton)
+* [Factory Method](#factory-method)
+* [Abstract Method](#abstract-method)
+* [Prototype](#prototype)
+* [Builder](#builder)
+
+### Estructurales
+* [Adapter](#adapter)
+* [Proxy](#proxy)
+* [Composite](#composite)
+* [Decorator](#decorator)
+* [Bridge](#bridge)
+* [Facade](#facade)
+* [Flyweight](#flyweight)
+
+### Comportamiento
+* [Observer](#observer)
+* [Strategy](#strategy)
+* [Command](#command)
+* [State](#state)
+* [Chain of Responsibility](#chain-of-responsibility)
+* [Interpreter](#interpreter)
+* [Iterator](#iterator)
+* [Mediator](#mediator)
+* [Memento](#memento)
+* [Template Method](#template-method)
+* [Visitor](#visitor)
+
 
 ---
 
